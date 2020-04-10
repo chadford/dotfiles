@@ -16,6 +16,8 @@ if exists('g:vscode')
     Plug 'easymotion/vim-easymotion'
     Plug 'tpope/vim-surround'
     Plug 'justinmk/vim-sneak'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-fugitive'
     " common end 
     
     call plug#end()
@@ -28,6 +30,8 @@ else
     Plug 'easymotion/vim-easymotion'
     Plug 'tpope/vim-surround'
     Plug 'justinmk/vim-sneak'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-fugitive'
     " common end 
     
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }

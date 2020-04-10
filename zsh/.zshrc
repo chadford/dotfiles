@@ -127,6 +127,8 @@ case `uname` in
   ;;
 esac
 
+# aliases
+
 alias amm="amm --no-remote-logging"
 #alias sbt="sbtx"
 
