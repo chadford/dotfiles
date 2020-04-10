@@ -40,6 +40,26 @@ else
     au BufRead,BufNewFile *.sbt set filetype=scala
     
     call plug#end()
+    
+    function! SetupCommandAbbrs(from, to)
+      exec 'cnoreabbrev <expr> '.a:from
+            \ .' ((getcmdtype() ==# ":" && getcmdline() ==# "'.a:from.'")'
+            \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+    endfunction
+    
+    " Use C to open coc config
+    call SetupCommandAbbrs('C', 'CocConfig')
+    
+    " use <tab> for trigger completion and navigate to the next complete item
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+    
+    inoremap <silent><expr> <Tab>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<Tab>" :
+          \ coc#refresh()
 
     set number
 
