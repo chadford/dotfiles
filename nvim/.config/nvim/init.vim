@@ -50,8 +50,6 @@ else
     autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-    set clipboard+=unnamedplus
- 
     command! -nargs=0 MetalsDoctor :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
 
     nnoremap <silent> <M-b> :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-import' })<CR> 
@@ -59,5 +57,13 @@ else
     nnoremap <silent> <M-c> :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-connect' })<CR>
 
     set tabstop=4 shiftwidth=4 expandtab
-    set mouse=a
+
+    if has("unix")
+        let s:uname = system("uname -s")
+        if s:uname == "Darwin\n"
+            " Do Mac stuff here
+            set clipboard+=unnamedplus
+            set mouse=a
+        endif
+    endif
 endif
