@@ -1,14 +1,14 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/go/bin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/csheerajin/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-POWERLEVEL9K_MODE='awesome-fontconfig'
+POWERLEVEL9K_MODE="awesome-fontconfig" 
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Set list of themes to pick from when loading at random
@@ -71,15 +71,17 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  zsh-autosuggestions
-  macports
-  osx
-  zsh-syntax-highlighting
-  iterm2
-  mvn
-  autojump
-  zsh-nvm
   history
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  autojump
+
+  zsh-nvm
+  nvm
+  mvn
+
+  osx
+  iterm2
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -110,17 +112,35 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+case `uname` in
+  Darwin)
+    # commands for OS X go here
+  ;;
+  Linux)
+    source ~/.fonts/devicons-regular.sh
+    source ~/.fonts/fontawesome-regular.sh
+    source ~/.fonts/octicons-regular.sh
+    source ~/.fonts/pomicons-regular.sh
+  ;;
+  FreeBSD)
+    # commands for FreeBSD go here
+  ;;
+esac
+
 alias amm="amm --no-remote-logging"
 #alias sbt="sbtx"
 
 if type nvim > /dev/null 2>&1; then
-  alias vi='nvim'
-  alias vim='nvim'
+  alias vi="nvim"
+  alias vim="nvim"
+  alias oldvim="vim"
 fi
 
-#export YVM_DIR=/Users/csheerajin/.yvm
+#export YVM_DIR=$HOME/.yvm
 #[ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/csheerajin/.sdkman"
-[[ -s "/Users/csheerajin/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/csheerajin/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
