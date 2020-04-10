@@ -5,7 +5,8 @@ filetype off                  " required
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
 "
-"let mapleader=","
+
+let mapleader=" "
 
 if exists('g:vscode')
     call plug#begin('~/.local/share/nvim/plugged')
