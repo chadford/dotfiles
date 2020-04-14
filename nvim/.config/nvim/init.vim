@@ -7,6 +7,16 @@ filetype off                  " required
 "
 
 let mapleader=" "
+set tabstop=4 shiftwidth=4 expandtab
+
+if has("unix")
+   let s:uname = system("uname -s")
+   if s:uname == "Darwin\n"
+        " Do Mac stuff here
+        set clipboard+=unnamedplus
+        set mouse=a
+    endif
+endif
 
 if exists('g:vscode')
     call plug#begin('~/.local/share/nvim/plugged')
@@ -80,15 +90,4 @@ else
     nnoremap <silent> <M-b> :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-import' })<CR> 
     nnoremap <silent> <M-y> :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })><CR> 
     nnoremap <silent> <M-c> :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-connect' })<CR>
-
-    set tabstop=4 shiftwidth=4 expandtab
-
-    if has("unix")
-        let s:uname = system("uname -s")
-        if s:uname == "Darwin\n"
-            " Do Mac stuff here
-            set clipboard+=unnamedplus
-            set mouse=a
-        endif
-    endif
 endif
