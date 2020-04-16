@@ -8,7 +8,6 @@ filetype off                  " required
 
 let mapleader=" "
 inoremap jk <ESC>
-noremap <Leader>s :write<CR>
 set tabstop=4 shiftwidth=4 expandtab
 
 if has("unix")
