@@ -7,6 +7,8 @@ filetype off                  " required
 "
 
 let mapleader=" "
+inoremap jk <ESC>
+noremap <Leader>s :write<CR>
 set tabstop=4 shiftwidth=4 expandtab
 
 if has("unix")
@@ -28,6 +30,7 @@ if exists('g:vscode')
     Plug 'justinmk/vim-sneak'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-commentary'
     " common end 
     
     call plug#end()
@@ -42,6 +45,7 @@ else
     Plug 'justinmk/vim-sneak'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-commentary'
     " common end 
     
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
