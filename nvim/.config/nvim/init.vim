@@ -53,6 +53,7 @@ else
     Plug 'preservim/nerdtree'
     
     Plug 'derekwyatt/vim-scala'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
     
     " Configuration for vim-scala
     au BufRead,BufNewFile *.sbt set filetype=scala
