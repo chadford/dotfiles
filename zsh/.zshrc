@@ -82,6 +82,7 @@ plugins=(
 
   osx
   iterm2
+  tmux
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -131,6 +132,7 @@ esac
 
 alias amm="amm --no-remote-logging"
 #alias sbt="sbtx"
+alias mr="mr -j5"
 
 if type nvim > /dev/null 2>&1; then
   alias vi="nvim"

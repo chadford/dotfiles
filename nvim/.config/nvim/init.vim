@@ -23,14 +23,14 @@ if exists('g:vscode')
     call plug#begin('~/.local/share/nvim/plugged')
     
     " common start
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-    Plug 'easymotion/vim-easymotion'
     Plug 'tpope/vim-surround'
     Plug 'justinmk/vim-sneak'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-commentary'
     " common end 
+
+    Plug 'asvetliakov/vim-easymotion'
     
     call plug#end()
     
@@ -38,14 +38,15 @@ else
     call plug#begin('~/.local/share/nvim/plugged')
     
     " common start
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-    Plug 'easymotion/vim-easymotion'
     Plug 'tpope/vim-surround'
     Plug 'justinmk/vim-sneak'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-commentary'
     " common end 
+    
+    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+    Plug 'easymotion/vim-easymotion'
     
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
@@ -54,6 +55,7 @@ else
     
     Plug 'derekwyatt/vim-scala'
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+    Plug 'hashivim/vim-terraform'
     
     " Configuration for vim-scala
     au BufRead,BufNewFile *.sbt set filetype=scala
@@ -94,4 +96,7 @@ else
     nnoremap <silent> <M-b> :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-import' })<CR> 
     nnoremap <silent> <M-y> :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })><CR> 
     nnoremap <silent> <M-c> :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-connect' })<CR>
+
+    let g:terraform_align=1
+    let g:terraform_fmt_on_save=1
 endif
