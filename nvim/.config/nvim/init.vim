@@ -10,6 +10,8 @@ let mapleader=" "
 inoremap jk <ESC>
 set tabstop=4 shiftwidth=4 expandtab
 
+autocmd BufRead,BufNewFile *.md setlocal spell
+
 if has("unix")
    let s:uname = system("uname -s")
    if s:uname == "Darwin\n"

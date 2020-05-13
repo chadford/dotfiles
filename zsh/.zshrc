@@ -116,6 +116,8 @@ source $ZSH/oh-my-zsh.sh
 case `uname` in
   Darwin)
     # commands for OS X go here
+    export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+    export PATH="$PATH:/Users/csheerajin/Library/Application Support/Coursier/bin"
   ;;
   Linux)
     source ~/.fonts/devicons-regular.sh
