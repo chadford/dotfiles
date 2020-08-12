@@ -308,9 +308,8 @@ bind-key l	switch-client -l
 # List of plugins
 set -g @tpm_plugins '          \
   tmux-plugins/tpm             \
-  tmux-plugins/tmux-resurrect  \
   tmux-plugins/tmux-continuum  \
-  tmux-plugins/tmux-fpp        \
+  tmux-plugins/tmux-resurrect  \
 '
 
 set -g @continuum-boot 'on'

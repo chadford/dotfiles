@@ -31,7 +31,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=5
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
@@ -83,6 +83,8 @@ plugins=(
   osx
   iterm2
   tmux
+
+  autoupdate
 )
 
 source $ZSH/oh-my-zsh.sh
