@@ -303,16 +303,21 @@ bind C-t move-window -t 10
 bind-key < swap-window -t -1\; select-window -t -1
 bind-key > swap-window -t +1\; select-window -t +1
 
-bind-key l	switch-client -l
+bind Tab       switch-client -l        # last active session
+bind-key l     last-window             # move to last active window
+
 
 # List of plugins
 set -g @tpm_plugins '          \
   tmux-plugins/tpm             \
   tmux-plugins/tmux-continuum  \
   tmux-plugins/tmux-resurrect  \
+  roy2220/easyjump.tmux        \
 '
 
 set -g @continuum-boot 'on'
+
+set-option -g @easyjump-key-binding "C-j"
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run -b '~/.tmux/plugins/tpm/tpm'

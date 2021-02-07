@@ -1,9 +1,13 @@
+emulate zsh -c "$(direnv export zsh)"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+emulate zsh -c "$(direnv hook zsh)"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -15,7 +19,7 @@ export ZSH=$HOME/.oh-my-zsh
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-POWERLEVEL9K_MODE="awesome-fontconfig" 
+#POWERLEVEL9K_MODE="awesome-fontconfig" 
 #ZSH_THEME="powerlevel9k/powerlevel9k"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -78,24 +82,25 @@ export UPDATE_ZSH_DAYS=5
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  autojump
+
   git
   history
   zsh-autosuggestions
-  zsh-syntax-highlighting
-  autojump
-
-  zsh-nvm
-  nvm
-  mvn
 
   osx
   iterm2
   tmux
+  fzf
 
   autoupdate
+
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
+
+export EDITOR='vim'
 
 # User configuration
 
@@ -145,6 +150,28 @@ esac
 alias amm="amm --no-remote-logging"
 #alias sbt="sbtx"
 alias mr="mr -j5"
+alias sbt='sbt --java-home $JAVA_HOME'
+
+pids() {
+    ps -efww | rg $1 | rg -v 'rg ' | cut -f4 -d' '
+}
+
+mergeit() {
+    gh pr checks $1 && gh pr merge $1 -s -d && say "pr merged" || say "pr build failure"
+}
+
+# fbd - delete git branch (including remote branches)
+fbd() {
+  local branches branch
+  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" | fzf --multi ) &&
+  git branch -D $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+function vault_login() {
+  vault login -method=okta username=${USERNAME}
+  [[ -n $VAULT_TOKEN ]] && unset VAULT_TOKEN
+}
 
 if type nvim > /dev/null 2>&1; then
   alias vi="nvim"
@@ -157,6 +184,9 @@ export LESS=FRX # used to override pager for gh-cli so it doesn't use `less`
 #export YVM_DIR=$HOME/.yvm
 #[ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
 
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+export PATH="/usr/local/bin:$PATH"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
@@ -167,3 +197,4 @@ export PATH="/usr/local/sbin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 if [ -e /Users/csheerajin/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/csheerajin/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+

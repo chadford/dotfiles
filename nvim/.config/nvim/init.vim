@@ -8,7 +8,7 @@ filetype off                  " required
 
 let mapleader=" "
 inoremap jk <ESC>
-set tabstop=4 shiftwidth=4 expandtab
+set tabstop=2 shiftwidth=2 expandtab
 
 autocmd BufRead,BufNewFile *.md setlocal spell
 
@@ -33,7 +33,8 @@ if exists('g:vscode')
     " common end 
 
     Plug 'asvetliakov/vim-easymotion'
-    
+    "Plug 'roy2220/easyjump.tmux'
+
     call plug#end()
     
 else
@@ -49,6 +50,7 @@ else
     
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
     Plug 'easymotion/vim-easymotion'
+    "Plug 'roy2220/easyjump.tmux'
     
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
@@ -56,7 +58,7 @@ else
     Plug 'preservim/nerdtree'
     
     Plug 'derekwyatt/vim-scala'
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     Plug 'hashivim/vim-terraform'
 
     Plug 'sbdchd/neoformat'
