@@ -300,7 +300,7 @@ set -g @tpm_plugins '          \
   tmux-plugins/tpm             \
   tmux-plugins/tmux-resurrect  \
   tmux-plugins/tmux-continuum  \
-  tmux-plugins/tmux-fpp        \
+  tmux-plugins/tmux-urlview    \
 '
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
