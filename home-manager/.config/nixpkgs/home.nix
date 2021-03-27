@@ -16,6 +16,7 @@
     fzf
     httpie
     jq
+    gron
     ripgrep
     stow
     telnet
@@ -25,14 +26,15 @@
     python38Packages.grip
 
     vault
-    aws
+    awscli2
     pgcli
 
-    #coursier
-    #bloop
+    coursier
+    bloop
     scalafmt
     sbt
     scala
+    ammonite
 
     # must be last
     zsh-syntax-highlighting
@@ -65,8 +67,14 @@
       diff = {
         tool = "meld";
       };
+      difftool = {
+        prompt = false;
+      };
       merge = {
         tool = "meld";
+      };
+      mergetool = {
+        prompt = false;
       };
       pull = {
         rebase = true;
@@ -87,5 +95,5 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.03";
+  home.stateVersion = "21.05";
 }

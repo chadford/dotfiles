@@ -184,17 +184,20 @@ export LESS=FRX # used to override pager for gh-cli so it doesn't use `less`
 #export YVM_DIR=$HOME/.yvm
 #[ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
 
+eval "$(cs java --jvm graalvm-java11:21.0.0 --env)"
+
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 export PATH="/usr/local/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-export PATH="/usr/local/sbin:$PATH"
+#export SDKMAN_DIR="$HOME/.sdkman"
+#[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+#export PATH="/usr/local/sbin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 if [ -e /Users/csheerajin/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/csheerajin/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
+eval "$(cs java --jvm graalvm-java11:21.0.0 --env)"
