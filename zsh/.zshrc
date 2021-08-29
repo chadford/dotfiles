@@ -1,3 +1,5 @@
+emulate zsh -c "$(direnv export zsh)"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -5,8 +7,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+emulate zsh -c "$(direnv hook zsh)"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH:/usr/local/lib"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -15,7 +20,8 @@ export ZSH=$HOME/.oh-my-zsh
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-POWERLEVEL9K_MODE="awesome-fontconfig" 
+#POWERLEVEL9K_MODE="awesome-fontconfig" 
+#ZSH_THEME="powerlevel9k/powerlevel9k"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
@@ -35,10 +41,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
-DISABLE_UPDATE_PROMPT="true"
+# DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=3
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
@@ -77,22 +83,28 @@ DISABLE_UPDATE_PROMPT="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  autojump
+
   git
   history
   zsh-autosuggestions
-  zsh-syntax-highlighting
-  autojump
-
-  zsh-nvm
-  nvm
-  mvn
 
   osx
   iterm2
   tmux
+  fzf
+
+  autoupdate
+
+  zsh-syntax-highlighting
 )
 
+setopt inc_append_history     # add commands to HISTFILE in order of execution
+setopt share_history          # share command history data
+
 source $ZSH/oh-my-zsh.sh
+
+export EDITOR='vim'
 
 # User configuration
 
@@ -123,6 +135,8 @@ source $ZSH/oh-my-zsh.sh
 case `uname` in
   Darwin)
     # commands for OS X go here
+    export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+    export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
   ;;
   Linux)
     source ~/.fonts/devicons-regular.sh
@@ -138,8 +152,30 @@ esac
 # aliases
 
 alias amm="amm --no-remote-logging"
-#alias sbt="sbtx"
+alias sbtx="~/bin/sbt -jvm-opts ~/.jvmopts"
 alias mr="mr -j5"
+#alias sbt='sbt --java-home $JAVA_HOME'
+
+pids() {
+    ps -efww | rg $1 | rg -v 'rg ' | tr -s " " | cut -d " " -f 2
+}
+
+mergeit() {
+    gh pr checks $1 && gh pr merge $1 -s -d && say "pr merged" || say "pr build failure"
+}
+
+# fbd - delete git branch (including remote branches)
+fbd() {
+  local branches branch
+  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" | fzf --multi ) &&
+  git branch -D $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+function vault_login() {
+  vault login -method=okta username=${USERNAME}
+  [[ -n $VAULT_TOKEN ]] && unset VAULT_TOKEN
+}
 
 if type nvim > /dev/null 2>&1; then
   alias vi="nvim"
@@ -149,27 +185,35 @@ fi
 
 export LESS=FRX # used to override pager for gh-cli so it doesn't use `less`
 
+#xmodmap ~/.xmodmap
+#xcape -e 'Mode_switch=Escape'
+
 #export YVM_DIR=$HOME/.yvm
 #[ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
-#
-#
+
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-if [ -e /home/charad/.nix-profile/etc/profile.d/nix.sh ]; then . /home/charad/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-
-export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
-
-$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
-
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
-xmodmap ~/.xmodmap
-xcape -e 'Mode_switch=Escape'
+#export SDKMAN_DIR="$HOME/.sdkman"
+#[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+#export PATH="/usr/local/sbin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+#eval "$(coursier java --jvm graalvm-java11:21.1.0 --env)"
+#eval "$(coursier java --jvm adopt:1.15.0-1 --env)"
+
+# >>> coursier install directory >>>
+export PATH="$PATH:$HOME/.local/share/coursier/bin"
+# <<< coursier install directory <<<
+
+# >>> JVM installed by coursier >>>
+export JAVA_HOME="$HOME/.cache/coursier/jvm/graalvm-java11@21.1.0"
+export PATH="$PATH:$HOME/.cache/coursier/jvm/graalvm-java11@21.1.0/bin"
+# <<< JVM installed by coursier <<<
+

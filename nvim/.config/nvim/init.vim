@@ -8,15 +8,17 @@ filetype off                  " required
 
 let mapleader=" "
 inoremap jk <ESC>
-set tabstop=4 shiftwidth=4 expandtab
+set tabstop=2 shiftwidth=2 expandtab
+set background=dark
+
+autocmd BufRead,BufNewFile *.md setlocal spell
 
 if has("unix")
    let s:uname = system("uname -s")
    if s:uname == "Darwin\n"
         " Do Mac stuff here
-        set clipboard+=unnamedplus
         set mouse=a
-    endif
+   endif
 endif
 
 if exists('g:vscode')
@@ -31,8 +33,11 @@ if exists('g:vscode')
     " common end 
 
     Plug 'asvetliakov/vim-easymotion'
-    
+    "Plug 'roy2220/easyjump.tmux'
+
     call plug#end()
+
+    command Write Wall
     
 else
     call plug#begin('~/.local/share/nvim/plugged')
@@ -54,9 +59,11 @@ else
     Plug 'preservim/nerdtree'
     
     Plug 'derekwyatt/vim-scala'
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     Plug 'hashivim/vim-terraform'
-    
+
+    Plug 'sbdchd/neoformat'
+
     " Configuration for vim-scala
     au BufRead,BufNewFile *.sbt set filetype=scala
     
