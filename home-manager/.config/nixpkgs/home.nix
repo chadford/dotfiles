@@ -4,6 +4,12 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+    }))
+  ];
+
   home.packages = with pkgs; [
     autojump
     tmux
@@ -11,6 +17,7 @@
 
     git
     gitAndTools.gh
+    tig
     nodejs
 
     fzf
@@ -29,12 +36,16 @@
     awscli2
     pgcli
 
+    protobuf
+
     coursier
     bloop
     scalafmt
     sbt
     scala
     ammonite
+
+    visualvm
 
     # must be last
     zsh-syntax-highlighting
@@ -58,6 +69,7 @@
       { path = "~/.gitconfig-personal"; condition = "gitdir:~/personal/"; }
       { path = "~/.gitconfig-personal"; condition = "gitdir:~/dotfiles/"; }
       { path = "~/.gitconfig-work"; condition = "gitdir:~/projects/"; }
+      { path = "~/.gitconfig-work"; condition = "gitdir:~/ssc/"; }
     ];
 
     extraConfig = {

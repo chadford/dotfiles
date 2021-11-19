@@ -183,6 +183,8 @@ tmux_conf_theme_status_left=' ❐ #S '
 #tmux_conf_theme_status_left=' ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} '
 tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} , %R , %d %b | #{username}#{root} | #{hostname} '
 #tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} #{?battery_status, #{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} '
+continuum_auto_save='#(~/.tmux/plugins/tmux-continuum/scripts/continuum_save.sh)'
+#status_right="$status_right$continuum_auto_save"
 
 # status left style
 tmux_conf_theme_status_left_fg='#000000,#e4e4e4,#e4e4e4'  # black, white , white
@@ -310,8 +312,8 @@ bind-key l     last-window             # move to last active window
 # List of plugins
 set -g @tpm_plugins '          \
   tmux-plugins/tpm             \
-  tmux-plugins/tmux-continuum  \
   tmux-plugins/tmux-resurrect  \
+  tmux-plugins/tmux-continuum  \
   roy2220/easyjump.tmux        \
 '
 
