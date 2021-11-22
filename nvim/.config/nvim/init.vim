@@ -50,9 +50,8 @@ else
     Plug 'tpope/vim-commentary'
     " common end 
     
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-    Plug 'easymotion/vim-easymotion'
-    
+    " Use release branch (recommend)
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'airblade/vim-gitgutter'

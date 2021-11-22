@@ -13,10 +13,9 @@
 
   home.packages = with pkgs; [
     autojump
-    #tmux
     autocutsel
-    neovim-nightly
-    #neovim
+    #neovim-nightly
+    neovim
     wally-cli
 
     git
@@ -40,20 +39,25 @@
     python39Packages.pgcli
     python39Packages.awscrt  # needed for awscli2
 
+    python39Packages.tkinter
+
     vault
     awscli2
 
-    coursier
-    bloop
+    #coursier
+    #bloop
+    scalafix
 
     go
     dep
-    visualvm
+    #docker
+    #docker_compose
+    #visualvm
     protobuf
 
     #c-blosc
     #qmk
-    virtualbox
+    #virtualbox
 
     # must be last
     zsh-syntax-highlighting
@@ -61,8 +65,8 @@
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "<changeme>";
-  home.homeDirectory = "/home/<changeme>";
+  home.username = "changeme";
+  home.homeDirectory = "/home/changeme";
 
   home.sessionVariables = {
     EDITOR = "vim";
@@ -71,7 +75,7 @@
   #programs.zsh.enableAutosuggestions = true;
   
   programs.alacritty = {
-    enable = true;
+    enable = false;
   };
 
   programs.git = {

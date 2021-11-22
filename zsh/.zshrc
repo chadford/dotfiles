@@ -89,14 +89,14 @@ plugins=(
   history
   zsh-autosuggestions
 
-  osx
-  iterm2
+  #macos
+  #iterm2
   tmux
   fzf
 
   autoupdate
 
-  zsh-syntax-highlighting
+  fast-syntax-highlighting
 )
 
 setopt inc_append_history     # add commands to HISTFILE in order of execution
@@ -139,10 +139,10 @@ case `uname` in
     export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
   ;;
   Linux)
-    source ~/.fonts/devicons-regular.sh
-    source ~/.fonts/fontawesome-regular.sh
-    source ~/.fonts/octicons-regular.sh
-    source ~/.fonts/pomicons-regular.sh
+    #source ~/.fonts/devicons-regular.sh
+    #source ~/.fonts/fontawesome-regular.sh
+    #source ~/.fonts/octicons-regular.sh
+    #source ~/.fonts/pomicons-regular.sh
   ;;
   FreeBSD)
     # commands for FreeBSD go here
@@ -213,7 +213,8 @@ export PATH="$PATH:$HOME/.local/share/coursier/bin"
 # <<< coursier install directory <<<
 
 # >>> JVM installed by coursier >>>
-export JAVA_HOME="$HOME/.cache/coursier/jvm/graalvm-java11@21.1.0"
-export PATH="$PATH:$HOME/.cache/coursier/jvm/graalvm-java11@21.1.0/bin"
+#export JAVA_HOME="$HOME/.cache/coursier/jvm/graalvm-java11@21.1.0"
+#export PATH="$PATH:$HOME/.cache/coursier/jvm/graalvm-java11@21.1.0/bin"
 # <<< JVM installed by coursier <<<
 
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
